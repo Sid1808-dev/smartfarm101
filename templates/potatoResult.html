@@ -1,0 +1,937 @@
+{% extends 'layout.html' %} {% block body %}
+<br>
+<h1 class="text-center"><strong>Live Crop Checkup Results</strong></h1>
+<style>
+    .thisone{
+        background: #fff;
+    }
+</style>
+<div class="thisone">
+              <br>
+<br>
+<br><br>
+<style>
+      .container1{
+          border-style: solid;
+          margin-right:10px;
+          margin-left: 10px;
+  border-color: light blue;
+  border-radius: 7px;
+  background: #F5F5F5;
+      }
+    </style>
+
+<div class="container1">
+<h2 class="text-center">PH</h2>
+<h2 class="text-center"><img src="./static/images/ph.svg" class="img-container"></h2>
+<br>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+  <div id="container"></div>
+  <p class="highcharts-description">
+
+    <h5 class="text-center">Realtime Ph readings updated every 2 seconds</h5>
+  </p>
+</figure>
+
+<style>
+	.highcharts-figure, .highcharts-data-table table {
+  min-width: 320px;
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+#container {
+  height: 400px;
+  border-style: solid;
+  border-color: coral;
+  border-radius: 10px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+</style>
+
+<script>
+	Highcharts.chart('container', {
+  chart: {
+    type: 'spline',
+    animation: Highcharts.svg, // don't animate in old IE
+    marginRight: 10,
+    events: {
+      load: function () {
+
+        // set up the updating of the chart each second
+        var series = this.series[0];
+        var series1 = this.series[1];
+        setInterval(function () {
+          var x = (new Date()).getTime(), // current time
+            y = Math.random()+5.4;
+          series.addPoint([x, y], true, true);
+          series1.addPoint([x, 5.8], true, true);
+        }, 2000);
+      }
+    }
+  },
+
+  time: {
+    useUTC: false
+  },
+
+  title: {
+    text: 'Ph'
+  },
+
+  accessibility: {
+    announceNewData: {
+      enabled: true,
+      minAnnounceInterval: 15000,
+      announcementFormatter: function (allSeries, newSeries, newPoint) {
+        if (newPoint) {
+          return 'New point added. Value: ' + newPoint.y;
+        }
+        return false;
+      }
+    }
+  },
+
+  xAxis: {
+    type: 'datetime',
+    tickPixelInterval: 150
+  },
+
+  yAxis: {
+    title: {
+      text: 'Value'
+    },
+    plotLines: [{
+      value: 0,
+      width: 1,
+      color: '#39FF14'
+    }]
+  },
+
+  tooltip: {
+    headerFormat: '<b>{series.name}</b><br/>',
+    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+  },
+
+  legend: {
+    enabled: true
+  },
+
+  exporting: {
+    enabled: false
+  },
+  plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        }
+    },
+  series: [{
+    name: 'Live PH reading',
+    data: (function () {
+      // generate an array of random data
+      var data = [],
+        time = (new Date()).getTime(),
+        i;
+
+      for (i = -19; i <= 0; i += 1) {
+        data.push({
+          x: time + i * 1000,
+          y: Math.random()+5.4
+        });
+      }
+      return data;
+    }())
+  },
+   {
+    name: 'Optimal Ph for Potatao (5.8)',
+    data: (function () {
+      // generate an array of random data
+      var data1 = [],
+        time1 = (new Date()).getTime(),
+        i1;
+
+      for (i1 = -19; i1 <= 0; i1 += 1) {
+        data1.push({
+          x: time1 + i1 * 1000,
+          y: 5.8
+        });
+      }
+      return data1;
+    }())
+  }]
+});
+</script>
+             <!-- For Ph level -->
+              {% if ph>=5.6 and ph<=6 %}
+
+
+                <div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;"><h2><strong>Ph level is ideal for the crop.</strong> </h2></p>
+          </div>
+      </div>
+  </div>
+</div>
+              {% else %}
+                 <div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+               <p class="text-center" style="color: black; font-size: 20px;">
+                   <h2>
+                <strong>Ph level is not ideal for the crop.</strong>
+                   </h2>
+                    <br>
+                <h3>
+                You should:
+                </h3>
+                <ol>
+                 <li>sprinkle about 1 1/2 pounds of horticultural sulfur with a fertilizer spreader over every 100 square feet of garden space to decrease the pH by one point.Lowering soil pH is not a quick process and requires planning to let the soil rest until the following year.</li>
+
+                 <li>potatoes grow best in an acidic soil with a pH level between 5.2 and 6.0. It is possible for them to grow in a higher pH, but the risk of developing a disease called “scab” is more likely.
+                 at pH values above 7.5, nutrient availability, in particular of phosphorus and the micronutrients,can be reduced, even though high total amounts of these elements may be present in the soil.</li>
+                 </ol>
+
+
+
+               </p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+              {% endif %}
+
+
+</div>
+<br><br>
+ <div class="container1">
+   <h2 class="text-center">Moisture Content</h2>
+<h2 class="text-center"><img src="./static/images/moi.svg" class="img-container"></h2>
+
+     <br><figure class="highcharts-figure">
+  <div id="container2"></div>
+  <p class="highcharts-description">
+
+    <h5 class="text-center">Realtime Moisture readings updated every 2 seconds</h5>
+  </p>
+</figure>
+
+<style>
+	.highcharts-figure, .highcharts-data-table table {
+  min-width: 320px;
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+#container2 {
+  height: 400px;
+  border-style: solid;
+  border-color: coral;
+  border-radius: 10px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+</style>
+
+<script>
+	Highcharts.chart('container2', {
+  chart: {
+    type: 'spline',
+    animation: Highcharts.svg, // don't animate in old IE
+    marginRight: 10,
+    events: {
+      load: function () {
+
+        // set up the updating of the chart each second
+        var series = this.series[0];
+        var series1 = this.series[1];
+        setInterval(function () {
+          var x = (new Date()).getTime(), // current time
+            y = Math.random()*300+500;
+          series.addPoint([x, y], true, true);
+          series1.addPoint([x, 600], true, true);
+        }, 2000);
+      }
+    }
+  },
+
+  time: {
+    useUTC: false
+  },
+
+  title: {
+    text: 'Moisture Content'
+  },
+
+  accessibility: {
+    announceNewData: {
+      enabled: true,
+      minAnnounceInterval: 15000,
+      announcementFormatter: function (allSeries, newSeries, newPoint) {
+        if (newPoint) {
+          return 'New point added. Value: ' + newPoint.y;
+        }
+        return false;
+      }
+    }
+  },
+
+  xAxis: {
+    type: 'datetime',
+    tickPixelInterval: 150
+  },
+
+  yAxis: {
+    title: {
+      text: 'Value'
+    },
+    plotLines: [{
+      value: 0,
+      width: 1,
+      color: '#964B00'
+    }]
+  },
+
+  tooltip: {
+    headerFormat: '<b>{series.name}</b><br/>',
+    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+  },
+
+  legend: {
+    enabled: true
+  },
+
+  exporting: {
+    enabled: false
+  },
+  plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        }
+    },
+  series: [{
+    name: 'Live Moisture reading (mm)',
+    data: (function () {
+      // generate an array of random data
+      var data = [],
+        time = (new Date()).getTime(),
+        i;
+
+      for (i = -19; i <= 0; i += 1) {
+        data.push({
+          x: time + i * 1000,
+          y: Math.random()*300+500
+        });
+      }
+      return data;
+    }())
+  },
+   {
+    name: 'Optimal Moisture content for Potatao (600)',
+    data: (function () {
+      // generate an array of random data
+      var data1 = [],
+        time1 = (new Date()).getTime(),
+        i1;
+
+      for (i1 = -19; i1 <= 0; i1 += 1) {
+        data1.push({
+          x: time1 + i1 * 1000,
+          y: 600
+        });
+      }
+      return data1;
+    }())
+  }]
+});
+</script>
+              <!-- For Moisture Content -->
+               {% if M>=500 and M<=700 %}
+                    <div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;"><h2><strong>The Moisture level is ideal for the crop.</strong></h2></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+               {% elif M<500 %}
+                <div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+               <p class="text-center" style="color: black; font-size: 20px;">
+                   <h2>
+                 <strong>Moisture level is not ideal for the crop.</strong>
+                    </h2>
+              <h3>
+                 You should:
+              </h3>
+              <br>
+                 <ol>
+                   <li>
+                    <strong>Spraying</strong>
+                    <br>
+                    Whether you’re using the tractor to spray on that extra moisture acre by acre, dropping water from aerial drones or manned aircraft or setting up a network of sprinklers, you’re going to face problems with this method of increasing soil moisture. It’s just not that efficient.
+                    While the aerial method of spraying your fields sounds time efficient, it really isn’t the best option. Of the 3 spraying methods mentioned above, it’s the most susceptible to drift and evaporation. It’s just not that accurate unless you have the funds available to invest in some high-tech drone equipment that can calculate how to drop the water most efficiently.
+                    Using a tractor to drive through your fields spraying water does give you a greater element of control, but it is also very time consuming. We’d recommend this if you just need to add moisture for the short term until the wet weather picks back up.
+                   </li>
+                   <li>
+                     <strong>Drip Irrigation</strong>
+                     <br>
+                     Drip irrigation is much like a network of sprinklers but much better. This technology isn’t the cheapest and it does have some disadvantages, however it really seems to be the best solution to nourish dry fields that need some extra soil moisture to see your crops through.
+                     A rigid structure of pipes set up throughout your fields can drip water and nutrient solutions right to the base of each plant, reducing the chances of evaporation and delivering water only where it’s needed. This is a great system but takes quite some planning to set up and remove when you need to harvest crops. Once it’s all set up you can adjust the pressure to drip more or less water across your field depending on the soil moisture levels. One of the main problems with this irrigation network is the tiny holes that let water drip out of the pipes – they can get clogged up and aren’t suitable for herbicides that need to be sprinkled to be activated.
+                     One ingenious solution that we’ve seen in recent years is the Figaro irrigation platform of sub-soil material tubes that slowly ‘weep’ water to plants only when the soil moisture level reduces. This means there’s no chance of evaporation at all as the water is delivered straight to the roots. Still, you’ll need to go through the hassle of removing it before/after harvest, and it’s not so straightforward to fix if there’s a problem somewhere within the underground network.
+                   </li>
+                 </ol>
+                </p>
+
+               </p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+                {% else %}
+
+                <div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;">
+                   <h2>
+                  <strong>The moisture level is not ideal.</strong>
+                    </h2>
+              <h3>
+              You should:
+              </h3><br>
+                  <ol>
+                    <li>
+                      <strong>Tillage</strong>
+                      <br>
+                      By tilling your soil, you’re reducing moisture in a number of ways. Firstly, any moisture that’s lingering below the top soil layer will be brought to the top to dry out or evaporate. Secondly, if your fields are hard and without any cracks for water to drain, tilling can introduce water that would otherwise build up and flood down into the soil to be drained away.
+                      You’ll want to be careful with this method. While breaking up the soil will allow moisture to penetrate, you risk too much soil degradation if you’re tilling after every rainfall, which could be just too much for your fields to handle.
+                      There are further disadvantages to this method, including exposing top soil which could result in soil erosion and compacting the soil further, preventing moisture from draining.
+                      This method is best if you’re looking for a 1 time, quick solution before you’re ready to sow. It is not suitable in the long term.
+                    </li>
+                    <li>
+                      <strong>Burning</strong>
+                      <br>
+                      Burning any remaining crops or crop residue is another method of reducing soil moisture levels, although it’s not the most popular. Many farmers believe that by burning off the old, dry or unwanted vegetation you make room for fresh new shoots and healthy plants to grow.
+                      Burning residue crops, weeds and other vegetation on fields will reduce moisture by evaporating it from the soil. Burning will also kill off any pests and even help to combat diseases… however fire isn’t selective. It will also burn off the micro bacteria and organisms living in the soil that your fields need to maintain soil nutrition levels and keep the fields aerobic and porous.
+                      You’ll need to be careful that your fire doesn’t spread to other fields, hedgerows, woodland or residential areas. Keep the fire on the field and take steps to control it.
+                    </li>
+                  </ol>
+                </p>
+
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+              {% endif %}
+ </div>
+
+
+<br><br>
+    <div class="container1">
+     <h2 class="text-center">Temperature Reading</h2>
+<h2 class="text-center"><img src="./static/images/temp.svg" class="img-container"></h2>
+<br><figure class="highcharts-figure">
+  <div id="container3"></div>
+  <p class="highcharts-description">
+
+    <h5 class="text-center">Realtime Temperature readings updated every 2 seconds</h5>
+  </p>
+</figure>
+
+<style>
+	.highcharts-figure, .highcharts-data-table table {
+  min-width: 320px;
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+#container3 {
+  height: 400px;
+  border-style: solid;
+  border-color: coral;
+  border-radius: 10px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+</style>
+
+<script>
+	Highcharts.chart('container3', {
+  chart: {
+    type: 'spline',
+    animation: Highcharts.svg, // don't animate in old IE
+    marginRight: 10,
+    events: {
+      load: function () {
+
+        // set up the updating of the chart each second
+        var series = this.series[0];
+        var series1 = this.series[1];
+        setInterval(function () {
+          var x = (new Date()).getTime(), // current time
+            y = Math.random()*4+17;
+          series.addPoint([x, y], true, true);
+          series1.addPoint([x, 19], true, true);
+        }, 2000);
+      }
+    }
+  },
+
+  time: {
+    useUTC: false
+  },
+
+  title: {
+    text: 'Temperature'
+  },
+
+  accessibility: {
+    announceNewData: {
+      enabled: true,
+      minAnnounceInterval: 15000,
+      announcementFormatter: function (allSeries, newSeries, newPoint) {
+        if (newPoint) {
+          return 'New point added. Value: ' + newPoint.y;
+        }
+        return false;
+      }
+    }
+  },
+
+  xAxis: {
+    type: 'datetime',
+    tickPixelInterval: 150
+  },
+
+  yAxis: {
+    title: {
+      text: 'Value'
+    },
+    plotLines: [{
+      value: 0,
+      width: 1,
+      color: '#964B00'
+    }]
+  },
+
+  tooltip: {
+    headerFormat: '<b>{series.name}</b><br/>',
+    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+  },
+
+  legend: {
+    enabled: true
+  },
+
+  exporting: {
+    enabled: false
+  },
+  plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        }
+    },
+  series: [{
+    name: 'Live Temperature reading (degree celcius)',
+    data: (function () {
+      // generate an array of random data
+      var data = [],
+        time = (new Date()).getTime(),
+        i;
+
+      for (i = -19; i <= 0; i += 1) {
+        data.push({
+          x: time + i * 1000,
+          y: Math.random()*4+17
+        });
+      }
+      return data;
+    }())
+  },
+   {
+    name: 'Optimal Temperature for Potatao (19 deg celcius)',
+    data: (function () {
+      // generate an array of random data
+      var data1 = [],
+        time1 = (new Date()).getTime(),
+        i1;
+
+      for (i1 = -19; i1 <= 0; i1 += 1) {
+        data1.push({
+          x: time1 + i1 * 1000,
+          y: 19
+        });
+      }
+      return data1;
+    }())
+  }]
+});
+</script>
+              <!-- The temperature for it -->
+               {% if T>=16 and T<=21 %}
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;"><h2><strong>The Temperature is ideal for the crop.</strong></h2></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+               {% elif T<16 %}
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;">
+
+              <h2><strong>The temperature is low, you can:</strong></h2>
+                 <ol>
+                   <li>Frost free growing season.</li>
+                   <li>Adjusting the sowing time.</li>
+                   <li>Selection of resistant varieties.</li>
+                   <li>Sprinkler irrigation.</li>
+                 </ol>
+
+
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+               {% else %}
+
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;">
+
+              <h2><strong>The temperature is high, you can:</strong></h2>
+                 <ol>
+                   <li>Naturally Ventilate the Greenhouse.</li>
+                   <li>Ventilate with Fans.</li>
+                   <li>Use Shade.</li>
+                   <li>Cooling with Water.</li>
+                 </ol>
+
+
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+    </div>
+              {% endif %}
+
+  <br><br>
+ <div class="container1">
+<h2 class="text-center">Humidity</h2>
+<h2 class="text-center"><img src="./static/images/hum.svg" class="img-container"></h2>
+
+     <br><br>
+     <figure class="highcharts-figure">
+  <div id="container4"></div>
+  <p class="highcharts-description">
+
+    <h5 class="text-center">Realtime Humidity readings updated every 2 seconds</h5>
+  </p>
+</figure>
+
+<style>
+	.highcharts-figure, .highcharts-data-table table {
+  min-width: 320px;
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+#container4 {
+  height: 400px;
+  border-style: solid;
+  border-color: coral;
+  border-radius: 10px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+</style>
+
+<script>
+	Highcharts.chart('container4', {
+  chart: {
+    type: 'spline',
+    animation: Highcharts.svg, // don't animate in old IE
+    marginRight: 10,
+    events: {
+      load: function () {
+
+        // set up the updating of the chart each second
+        var series = this.series[0];
+        var series1 = this.series[1];
+        setInterval(function () {
+          var x = (new Date()).getTime(), // current time
+            y = Math.random()*4+93.5;
+          series.addPoint([x, y], true, true);
+          series1.addPoint([x, 95], true, true);
+        }, 2000);
+      }
+    }
+  },
+
+  time: {
+    useUTC: false
+  },
+
+  title: {
+    text: 'Humidity'
+  },
+
+  accessibility: {
+    announceNewData: {
+      enabled: true,
+      minAnnounceInterval: 15000,
+      announcementFormatter: function (allSeries, newSeries, newPoint) {
+        if (newPoint) {
+          return 'New point added. Value: ' + newPoint.y;
+        }
+        return false;
+      }
+    }
+  },
+
+  xAxis: {
+    type: 'datetime',
+    tickPixelInterval: 150
+  },
+
+  yAxis: {
+    title: {
+      text: 'Value'
+    },
+    plotLines: [{
+      value: 0,
+      width: 1,
+      color: '#808080'
+    }]
+  },
+
+  tooltip: {
+    headerFormat: '<b>{series.name}</b><br/>',
+    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+  },
+
+  legend: {
+    enabled: true
+  },
+
+  exporting: {
+    enabled: false
+  },
+  plotOptions: {
+        series: {
+            marker: {
+                enabled: false
+            }
+        }
+    },
+  series: [{
+    name: 'Live Humidity reading',
+    data: (function () {
+      // generate an array of random data
+      var data = [],
+        time = (new Date()).getTime(),
+        i;
+
+      for (i = -19; i <= 0; i += 1) {
+        data.push({
+          x: time + i * 1000,
+          y: Math.random()*4+93.5
+        });
+      }
+      return data;
+    }())
+  },
+   {
+    name: 'Optimal Humidity for Potatao (95)',
+    data: (function () {
+      // generate an array of random data
+      var data1 = [],
+        time1 = (new Date()).getTime(),
+        i1;
+
+      for (i1 = -19; i1 <= 0; i1 += 1) {
+        data1.push({
+          x: time1 + i1 * 1000,
+          y: 95
+        });
+      }
+      return data1;
+    }())
+  }]
+});
+</script>
+              <!-- For the HUMIDITY level -->
+               {% if H>=95 %}
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;"><h2><strong>The humidity level is ideal for the crop.</strong></h2></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+               {% else %}
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <p class="text-center" style="color: black; font-size: 20px;"><h2><strong>Humidity level is not ideal. Solution is to grow the crop under controlled atmosphere.</strong></h2></p>
+          </div>
+      </div>
+  </div>
+</div>
+ </div>
+              {% endif %}
+              <br>
+              <br>
+
+{% endblock %}
+</div>

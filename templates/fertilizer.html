@@ -1,0 +1,565 @@
+<!-- {% extends 'layout.html' %} -->
+
+{% block body %}
+<style>
+  html body {
+    background-color: rgb(206, 206, 228);
+  }
+</style>
+<!--Form Section-->
+<br /><br />
+<h2 style="text-align: center; margin: 0px; color: black">
+  <b>Get informed advice on fertilizer based on soil</b>
+</h2>
+<br />
+
+<div
+  style="
+    width: 350px;
+    height: 40rem;
+    margin: 0px auto;
+    color: black;
+    border-radius: 25px;
+    padding: 10px 10px;
+  "
+>
+  <form method="POST" action="{{ url_for('fert_recommend') }}">
+    <div class="form-group">
+      <label for="Nitrogen" style="font-size: 17px"><b>Nitrogen</b></label>
+      <input
+        type="text"
+        class="form-control"
+        id="Nitrogen"
+        name="nitrogen"
+        placeholder="Enter the value (Range: 0-200)"
+        style="font-weight: bold"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="Phosphorous" style="font-size: 17px"
+        ><b>Phosphorous</b></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="Phosphorous"
+        name="phosphorous"
+        placeholder="Enter the value (Range: 0-200)"
+        style="font-weight: bold"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="Pottasium" style="font-size: 17px"><b>Pottasium</b></label>
+      <input
+        type="text"
+        class="form-control"
+        id="Pottasium"
+        name="pottasium"
+        placeholder="Enter the value (Range: 0-200)"
+        style="font-weight: bold"
+        required
+      />
+    </div>
+    <!-- <div class="form-group">
+      <label for="ph" style="font-size: 17px"><b>ph level</b></label>
+      <input
+        type="text"
+        class="form-control"
+        id="ph"
+        name="ph"
+        placeholder="Enter the value"
+        style="font-weight: bold"
+        required
+      />
+    </div> -->
+    <div class="form-group">
+      <label for="crop" style="font-size: 17px"
+        ><b>Crop you want to grow</b></label
+      >
+      <select
+        name="cropname"
+        class="form-control"
+        id="crop"
+        onchange="showDiv(this)"
+        placeholder="Select a crop"
+        style="font-weight: bold"
+        required
+      >
+       <option selected>Select crop</option>
+        <option value="rice">rice</option>
+        <option value="maize">maize</option>
+        <option value="chickpea">chickpea</option>
+        <option value="kidneybeans">kidneybeans</option>
+        <option value="pigeonpeas">pigeonpeas</option>
+        <option value="mothbeans">mothbeans</option>
+        <option value="mungbean">mungbean</option>
+        <option value="blackgram">blackgram</option>
+        <option value="lentil">lentil</option>
+        <option value="pomegranate">pomegranate</option>
+        <option value="banana">banana</option>
+        <option value="mango">mango</option>
+        <option value="grapes">grapes</option>
+        <option value="watermelon">watermelon</option>
+        <option value="muskmelon">muskmelon</option>
+        <option value="apple">apple</option>
+      </select>
+    </div>
+
+      <!--Val0-->
+
+      <div id="hidden_div0" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:80</p>
+          <p>P:40</p>
+          <P>K:40</P>
+      </div>
+      <style>
+          #hidden_div0{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+    <script type="text/javascript">
+        function showDiv(select){
+        if(select.value == "rice"){
+        document.getElementById('hidden_div0').style.display = "block";
+        }
+        else if(select.value == "maize"){
+        document.getElementById('hidden_div1').style.display = "block";
+        }
+        else if(select.value == "chickpea"){
+        document.getElementById('hidden_div2').style.display = "block";
+        }
+        else if(select.value == "kidneybeans"){
+        document.getElementById('hidden_div3').style.display = "block";
+        }
+        else if(select.value == "pigeonpeas"){
+        document.getElementById('hidden_div4').style.display = "block";
+        }
+        else if(select.value == "mothbeans"){
+        document.getElementById('hidden_div5').style.display = "block";
+        }
+        else if(select.value == "mungbean"){
+        document.getElementById('hidden_div6').style.display = "block";
+        }
+        else if(select.value == "blackgram"){
+        document.getElementById('hidden_div7').style.display = "block";
+        }
+        else if(select.value == "lentil"){
+        document.getElementById('hidden_div8').style.display = "block";
+        }
+        else if(select.value == "pomegranate"){
+        document.getElementById('hidden_div9').style.display = "block";
+        }
+        else if(select.value == "banana"){
+        document.getElementById('hidden_div10').style.display = "block";
+        }
+        else if(select.value == "mango"){
+        document.getElementById('hidden_div11').style.display = "block";
+        }
+        else if(select.value == "grapes"){
+        document.getElementById('hidden_div12').style.display = "block";
+        }
+        else if(select.value == "watermelon"){
+        document.getElementById('hidden_div13').style.display = "block";
+        }
+        else if(select.value == "muskmelon"){
+        document.getElementById('hidden_div14').style.display = "block";
+        }
+        else if(select.value == "apple"){
+        document.getElementById('hidden_div15').style.display = "block";
+        }
+
+
+        else{
+        document.getElementById('hidden_div0').style.display = "none";
+        document.getElementById('hidden_div1').style.display = "none";
+        document.getElementById('hidden_div2').style.display = "none";
+        document.getElementById('hidden_div3').style.display = "none";
+        document.getElementById('hidden_div4').style.display = "none";
+        document.getElementById('hidden_div5').style.display = "none";
+        document.getElementById('hidden_div6').style.display = "none";
+        document.getElementById('hidden_div7').style.display = "none";
+        document.getElementById('hidden_div8').style.display = "none";
+        document.getElementById('hidden_div9').style.display = "none";
+        document.getElementById('hidden_div10').style.display = "none";
+        document.getElementById('hidden_div11').style.display = "none";
+        document.getElementById('hidden_div12').style.display = "none";
+        document.getElementById('hidden_div13').style.display = "none";
+        document.getElementById('hidden_div14').style.display = "none";
+        document.getElementById('hidden_div15').style.display = "none";
+
+        }
+        }
+    </script>
+
+      <!--Val:1-->
+
+           <div id="hidden_div1" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:80</p>
+          <p>P:40</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div1{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+      <!--val2-->
+
+   <div id="hidden_div2" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:40</p>
+          <p>P:60</p>
+          <P>K:80</P>
+      </div>
+      <style>
+          #hidden_div2{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div3" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:60</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div3{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div4" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:60</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div4{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div5" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:40</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div5{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div6" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:40</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div6{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div7" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:40</p>
+          <p>P:60</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div7{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div8" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:60</p>
+          <P>K:20</P>
+      </div>
+      <style>
+          #hidden_div8{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div9" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:10</p>
+          <P>K:40</P>
+      </div>
+      <style>
+          #hidden_div9{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+       <!--Val:1-->
+
+           <div id="hidden_div10" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:100</p>
+          <p>P:75</p>
+          <P>K:60</P>
+      </div>
+      <style>
+          #hidden_div10{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div11" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:20</p>
+          <P>K:30</P>
+      </div>
+      <style>
+          #hidden_div11{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div12" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:125</p>
+          <P>K:200</P>
+      </div>
+      <style>
+          #hidden_div12{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div13" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:100</p>
+          <p>P:10</p>
+          <P>K:50</P>
+      </div>
+      <style>
+          #hidden_div13{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+       <!--Val:1-->
+
+           <div id="hidden_div14" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:100</p>
+          <p>P:10</p>
+          <P>K:50</P>
+      </div>
+      <style>
+          #hidden_div14{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+
+       <!--Val:1-->
+
+           <div id="hidden_div15" style="display:none;"> <strong style="text-align=center;">Optimum Values:</strong><br>
+        <p>N:20</p>
+          <p>P:125</p>
+          <P>K:200</P>
+      </div>
+      <style>
+          #hidden_div15{
+            width: 330px;
+            height: 150px;
+            background: #ecbcb4;
+            margin-bottom: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            border-color: coral;
+            border-style: solid;
+          }
+
+      </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Button------------------------------------------------------------------------------------------>
+    <div class="d-flex justify-content-center">
+      <button
+        type="submit"
+        class="btn btn-info"
+        style="
+          color: black;
+          font-weight: bold;
+          width: 130px;
+          height: 50px;
+          border-radius: 12px;
+          font-size: 21px;
+        "
+      >
+        Recommend
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

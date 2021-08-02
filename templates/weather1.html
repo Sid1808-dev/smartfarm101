@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <title>Weather app</title>
+    <head>
+        <link href="{{ url_for('static', filename='css/stylew.css') }}" rel='stylesheet' type='text/css' />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+
+        <form id="search-form">
+            <input type="search"
+            placeholder="Enter City Name"
+            id="search-input"
+            required
+            autocomplete="off"
+            />
+            <br>
+        </br>
+        <button id="search-button">Search</button>
+
+        </form>
+
+
+        <main id="app-container">
+            <div id="location">
+                <p>-------</p>
+            </div>
+                <div id="temp">
+                    <img id="temp-icon" src="./icons/sun.svg" alt="">
+                    <p><span id="temp-value">-----</span> <span id="temp-unit" >&#176c</span> </p>
+                </div>
+
+                <div id="climate">
+                    <p>------</p>
+                </div>
+
+
+
+
+
+        </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/JavaScript" src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+
+
+
+
+
+
+
+    </body>
+
+</html>

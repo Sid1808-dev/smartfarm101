@@ -1,0 +1,83 @@
+{% extends 'layout.html' %} {% block body %}
+
+<style>
+  .mt-0 {
+  margin-top: 50 !important;
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container py-2 mx-auto my-50 h-10 " style="margin: 12rem;">
+  <div class="row">
+      <div class="col-sm py-2 py-md-3">
+          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+              <h1 class="text-center">Most Recommended Crop to grow is <i><strong>{{ prediction }} </strong></i>in your farm</h1>
+              <br>
+              <br>
+
+              <h2 class="text-center"><b>Some other recommendations for the crops that can give good yield are:</b></h2>
+              <br>
+              <br>
+              <br>
+              <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+#t01 {
+  background-color: #f1f1c1;
+}
+</style>
+              <table id="t01">
+
+
+  <tr>
+    <th>Crop</th>
+    <th>Confidence</th>
+  </tr>
+
+             {% for predict in predictionlist %}
+
+  <tr>
+    <td>{{ predict }}</td>
+      {% if loop.index == 1 %}
+        <td><i class="fa fa-thumbs-up" style="color:green"></i>&nbspgreat !</td>
+      {% endif %}
+      {% if loop.index == 2 %}
+        <td><i class="fa fa-thumbs-up" style="color:blue"></i>&nbspgood !</td>
+      {% endif %}
+      {% if loop.index == 3 %}
+        <td><i class="fa fa-thumbs-up" style="color:yellow"></i>&nbspabove average !</td>
+      {% endif %}
+      {% if loop.index == 4 %}
+        <td><i class="fa fa-thumbs-up" style="color:brown"></i>&nbspaverage !</td>
+      {% endif %}
+      {% if loop.index == 5 %}
+        <td><i class="fa fa-thumbs-up" style="color:brown"></i>&nbspaverage !</td>
+      {% endif %}
+
+
+  </tr>
+
+         {% endfor %}
+
+</table>
+
+
+
+
+              </ul>
+              <br>
+              <br>
+          </div>
+
+          </div>
+      </div>
+  </div>
+
+{% endblock %}
